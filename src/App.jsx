@@ -1,8 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import styled from 'styled-components'
-
 import { Navbar, Sidebar, Footer } from './components'
+
 import {
   Home,
   SingleProduct,
