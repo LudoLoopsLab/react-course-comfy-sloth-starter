@@ -19,7 +19,7 @@ const SingleProductPage = () => {
   const history = useHistory()
 
   const {
-    single_product_url_loading: loading,
+    single_product_loading: loading,
     single_product_error: error,
     single_product: product,
     fetchSingleProduct,
@@ -62,7 +62,7 @@ const SingleProductPage = () => {
           back to products
         </Link>
         <div className='product-center'>
-          <ProductImages />
+          <ProductImages images={images} />
           <section className='content'>
             <h2>{name}</h2>
             <Stars />
