@@ -10,11 +10,12 @@ import {
 } from '../actions'
 
 const filter_reducer = (state, action) => {
+  console.log('filter_reducer', action)
   if (action.type === LOAD_PRODUCTS) {
     return {
       ...state,
       all_products: [...action.payload],
-      filter_products: [...action.payload],
+      filtered_products: [...action.payload],
     }
   }
 
