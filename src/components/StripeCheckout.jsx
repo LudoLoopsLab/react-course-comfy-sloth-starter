@@ -48,7 +48,14 @@ const CheckoutForm = () => {
   }
 
   const createPaymentIntent = async () => {
-    console.log('createPaymentIntent')
+    try {
+      const data = await axios.post(
+        '/.netlify/functions/create-payment-intent',
+        JSON.stringify({ cart, shipping_fee, total_amount })
+      )
+    } catch (error) {
+      console.log(error)
+    }
   }
   useEffect(() => {
     createPaymentIntent()
@@ -68,7 +75,7 @@ const CheckoutForm = () => {
         />
         <button disabled={processing || disabled || succeeded} id='submit'>
           <span id='button-text'>
-            {processing ? <div className='spinner' /> : 'Pay'}
+            {processing ? <div className='spinner' id='spinnier'></div> : 'Pay'}
           </span>
         </button>
         {/* Show any error that happens when processing the payment */}
@@ -104,7 +111,8 @@ const StripeCheckout = () => {
 
 const Wrapper = styled.section`
   form {
-    width: 30vw;
+    width: 450px;
+
     align-self: center;
     box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
       0px 2px 5px 0px rgba(50, 50, 93, 0.1),
@@ -235,7 +243,8 @@ const Wrapper = styled.section`
       transform: rotate(360deg);
     }
   }
-  @media only screen and (max-width: 600px) {
+
+  @media only screen and (max-width: 500px) {
     form {
       width: 80vw;
     }
