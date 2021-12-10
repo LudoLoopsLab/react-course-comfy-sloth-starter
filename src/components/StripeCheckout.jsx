@@ -53,12 +53,15 @@ const CheckoutForm = () => {
         '/.netlify/functions/create-payment-intent',
         JSON.stringify({ cart, shipping_fee, total_amount })
       )
+      console.log(data.data.clientSecret)
+      setClientSecret(data.data.clientSecret)
     } catch (error) {
       console.log(error)
     }
   }
   useEffect(() => {
     createPaymentIntent()
+    //  eslint-disable-next-line
   }, [])
 
   const handleChange = async event => {}
