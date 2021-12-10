@@ -64,12 +64,47 @@ const CheckoutForm = () => {
     //  eslint-disable-next-line
   }, [])
 
-  const handleChange = async event => {}
+  const handleChange = async event => {
+    setDisabled(event.empty)
+    setError(event.error ? event.error.message : '')
+  }
 
-  const handleSubmit = async ev => {}
+  const handleSubmit = async ev => {
+    ev.preventDefault()
+    setProcessing(true)
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+      },
+    })
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`)
+      setProcessing(false)
+    } else {
+      setError(null)
+      setProcessing(false)
+      setSucceeded(true)
+      setTimeout(() => {
+        clearCart()
+        history.push('/')
+      }, 10000)
+    }
+  }
 
   return (
     <div>
+      {succeeded ? (
+        <article>
+          <h4>thank you</h4>
+          <h4>your payment was successful!</h4>
+          <h4>Redirecting to home page shortly</h4>
+        </article>
+      ) : (
+        <article>
+          <h4>hello, {myUser && myUser.name}</h4>
+          <p>Your total is {formatPrice(shipping_fee + total_amount)}</p>
+        </article>
+      )}
       <form id='payment-form' onSubmit={handleSubmit}>
         <CardElement
           id='card-element'
